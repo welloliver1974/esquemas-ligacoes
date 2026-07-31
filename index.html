@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="escuro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#07060f">
+  <title>Central de Arquivos — Esquemas e Ligações</title>
+  <meta name="description" content="Central de arquivos de manutenção: esquemas, ligações, manuais e documentos técnicos.">
+  <!-- Favicon SVG -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23312e81'/%3E%3Ctext y='.84em' x='50%25' text-anchor='middle' font-size='55'%3E🧩%3C/text%3E%3C/svg%3E">
+  <!-- Open Graph -->
+  <meta property="og:title" content="Central de Arquivos — Esquemas e Ligações">
+  <meta property="og:description" content="Todos os esquemas, manuais e documentos de manutenção das nossas máquinas — em um só lugar.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://welloliver1974.github.io/esquemas-ligacoes/">
+  <meta property="og:image" content="https://welloliver1974.github.io/esquemas-ligacoes/logo.png">
+  <meta name="twitter:card" content="summary">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <script>
+    /* anti-flash: aplica o tema salvo antes da primeira pintura */
+    (function () {
+      try {
+        var t = localStorage.getItem('tema') || 'escuro';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'escuro');
+      }
+    })();
+  </script>
+  <style>
+    /* ============ TOKENS DE TEMA ============ */
+    :root {
+      --radius: 18px;
+      --radius-sm: 12px;
+      --transition: .22s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    /* ----- ESCURO (padrão) ----- */
+    [data-theme="escuro"] {
+      --bg: #08080f;
+      --topbar: rgba(12, 14, 36, 0.66);
+      --card: rgba(20, 23, 56, 0.55);
+      --card-solid: #14143e;
+      --border: rgba(141, 148, 255, 0.14);
+      --border-strong: rgba(141, 148, 255, 0.30);
+      --text: #eef0ff;
+      --text-soft: #9aa1c9;
+      --accent: #818cf8;
+      --accent-2: #6366f1;
+      --accent-glow: rgba(129, 140, 248, 0.45);
+      --shadow: 0 12px 34px rgba(0, 0, 0, 0.45);
+      --shadow-hover: 0 22px 52px rgba(0, 0, 0, 0.55);
+      --hero-1: #0b0918;
+      --hero-2: #191345;
+      --hero-3: #07060f;
+      --glow-1: rgba(99, 102, 241, 0.30);
+      --glow-2: rgba(34, 211, 238, 0.20);
+      --glow-3: rgba(236, 72, 153, 0.18);
+      --blob1: rgba(124, 92, 255, 0.55);
+      --blob2: rgba(45, 212, 230, 0.40);
+      --blob3: rgba(236, 72, 200, 0.38);
+      --blob-op: 0.9;
+      --footer-bg: #050616;
+      --logo-plate: rgba(255, 255, 255, 0.95);
+      --logo-shadow: 0 6px 22px rgba(0, 0, 0, 0.45);
+    }
+
+    /* ----- CLARO ----- */
+    [data-theme="claro"] {
+      --bg: #eef0fb;
+      --topbar: rgba(255, 255, 255, 0.72);
+      --card: rgba(255, 255, 255, 0.78);
+      --card-solid: #ffffff;
+      --border: rgba(30, 36, 80, 0.10);
+      --border-strong: rgba(79, 70, 229, 0.24);
+      --text: #1b2050;
+      --text-soft: #5b617e;
+      --accent: #4f46e5;
+      --accent-2: #6366f1;
+      --accent-glow: rgba(79, 70, 229, 0.30);
+      --shadow: 0 8px 22px rgba(30, 36, 80, 0.10);
+      --shadow-hover: 0 18px 40px rgba(30, 36, 80, 0.18);
+      --hero-1: #2e2a66;
+      --hero-2: #4f46e5;
+      --hero-3: #251f4e;
+      --glow-1: rgba(124, 58, 237, 0.26);
+      --glow-2: rgba(6, 182, 212, 0.20);
+      --glow-3: rgba(236, 72, 153, 0.14);
+      --blob1: rgba(124, 92, 255, 0.30);
+      --blob2: rgba(45, 180, 220, 0.26);
+      --blob3: rgba(236, 72, 200, 0.22);
+      --blob-op: 0.7;
+      --footer-bg: #0f1226;
+      --logo-plate: #ffffff;
+      --logo-shadow: 0 6px 18px rgba(30, 36, 80, 0.18);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { background: var(--bg); }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      background: transparent;
+      transition: color var(--transition);
+    }
+
+    /* ===== AURORA (fundo animado) ===== */
+    .aurora {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .aurora::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(900px 420px at 14% -4%, var(--glow-1), transparent 62%),
+        radial-gradient(760px 380px at 88% 6%, var(--glow-2), transparent 62%);
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(72px);
+      opacity: var(--blob-op);
+      will-change: transform;
+    }
+    .b1 { width: 46vw; height: 46vw; left: -8vw; top: -10vh;
+      background: radial-gradient(circle at center, var(--blob1), transparent 70%);
+      animation: drift1 23s ease-in-out infinite; }
+    .b2 { width: 42vw; height: 42vw; right: -6vw; top: 2vh;
+      background: radial-gradient(circle at center, var(--blob2), transparent 70%);
+      animation: drift2 28s ease-in-out infinite; }
+    .b3 { width: 54vw; height: 54vw; left: 22vw; bottom: -22vh;
+      background: radial-gradient(circle at center, var(--blob3), transparent 70%);
+      animation: drift3 33s ease-in-out infinite; }
+
+    @keyframes drift1 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      50%     { transform: translate(16vw, 8vh) scale(1.15); }
+    }
+    @keyframes drift2 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      50%     { transform: translate(-14vw, 10vh) scale(1.12); }
+    }
+    @keyframes drift3 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      50%     { transform: translate(10vw, -12vh) scale(1.08); }
+    }
+
+    /* ===== TOPBAR ===== */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 22px;
+      background: var(--topbar);
+      backdrop-filter: blur(20px) saturate(150%);
+      -webkit-backdrop-filter: blur(20px) saturate(150%);
+      border-bottom: 1px solid var(--border);
+      transition: background var(--transition), border-color var(--transition);
+    }
+    .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+
+    .logo {
+      display: block;
+      width: 240px;
+      max-width: 56vw;
+      height: auto;
+      aspect-ratio: 243 / 64;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,.18));
+      transition: filter var(--transition), transform var(--transition);
+    }
+    .logo:hover { transform: translateY(-1px); filter: drop-shadow(0 6px 18px rgba(0,0,0,.22)); }
+
+    .theme-btn {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      flex-shrink: 0;
+      border: 1px solid var(--border-strong);
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      border-radius: 13px;
+      font-size: 19px;
+      line-height: 1;
+      cursor: pointer;
+      color: var(--text);
+      transition: background var(--transition), transform .15s, box-shadow .2s, border-color var(--transition);
+    }
+    .theme-btn:hover {
+      background: color-mix(in srgb, var(--accent) 22%, transparent);
+      transform: translateY(-1px) rotate(-8deg);
+      box-shadow: 0 8px 22px var(--accent-glow);
+    }
+    .theme-btn:active { transform: translateY(0); }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--hero-1) 0%, var(--hero-2) 48%, var(--hero-3) 100%);
+      color: #fff;
+      padding: 58px 24px 66px;
+      text-align: center;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(600px 240px at 15% 8%, rgba(255,255,255,.16), transparent 60%),
+        radial-gradient(520px 270px at 86% 92%, var(--glow-2), transparent 60%),
+        radial-gradient(320px 170px at 72% 18%, var(--glow-3), transparent 60%);
+      pointer-events: none;
+    }
+    /* brilho que varre o hero */
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0; left: -60%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(100deg, transparent, rgba(255,255,255,.10), transparent);
+      transform: skewX(-18deg);
+      animation: sweep 9s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes sweep {
+      0%, 100% { left: -60%; }
+      55%, 80% { left: 120%; }
+    }
+    .hero > * { position: relative; z-index: 1; }
+
+    .hero .badge {
+      display: inline-block;
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.30);
+      backdrop-filter: blur(8px);
+      padding: 7px 18px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 600;
+      letter-spacing: .7px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: rise .6s ease forwards;
+      animation-delay: .05s;
+    }
+    .hero h1 {
+      font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+      font-size: clamp(32px, 5.8vw, 54px);
+      font-weight: 700;
+      letter-spacing: -.6px;
+      margin-bottom: 16px;
+      color: #ffffff;
+      text-shadow: 0 8px 26px rgba(0,0,0,.35);
+    }
+    /* palavras do título: sem fade inicial, animação só de subida */
+    .hero h1 .kw {
+      display: inline-block;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero h1 .kw { animation: none; opacity: 1; transform: none; }
+    }
+    .hero p {
+      max-width: 620px;
+      margin: 0 auto 28px;
+      font-size: clamp(15px, 2.4vw, 18px);
+      opacity: 0;
+      transform: translateY(12px);
+      animation: rise .6s ease forwards;
+      animation-delay: .55s;
+    }
+    .hero p { color: rgba(255,255,255,.94); }
+    @keyframes rise { to { opacity: 1; transform: none; } }
+
+    .search-wrap { max-width: 540px; margin: 0 auto; position: relative;
+      opacity: 0; transform: translateY(12px); animation: rise .55s ease forwards; animation-delay: .7s; }
+    .search-wrap::before {
+      content: "🔍";
+      position: absolute;
+      left: 18px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 15px;
+      opacity: .85;
+      pointer-events: none;
+    }
+    .search-wrap input {
+      width: 100%;
+      padding: 15px 20px 15px 46px;
+      border: 1px solid rgba(255,255,255,.28);
+      border-radius: 999px;
+      font-size: 16px;
+      font-family: inherit;
+      color: var(--text);
+      background: rgba(255,255,255,.10);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.24);
+      outline: none;
+      transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
+    }
+    .search-wrap input::placeholder { color: rgba(255,255,255,.72); }
+    .search-wrap input:focus { border-color: rgba(255,255,255,.62); background: rgba(255,255,255,.16); box-shadow: 0 14px 40px rgba(0,0,0,.32); }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 22px;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: rise .55s ease forwards;
+      animation-delay: .82s;
+    }
+    .chip {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.28);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s, transform .15s, box-shadow .2s, border-color .2s;
+      font-family: inherit;
+    }
+    .chip:hover { background: rgba(255,255,255,.24); transform: translateY(-1px); }
+    .chip.active {
+      background: #fff;
+      color: var(--accent-2);
+      border-color: #fff;
+      box-shadow: 0 6px 18px rgba(0,0,0,.22);
+    }
+
+    .total-info {
+      margin-top: 20px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: rgba(255,255,255,.88);
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.20);
+      backdrop-filter: blur(8px);
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 999px;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: rise .55s ease forwards;
+      animation-delay: .95s;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ===== CONTEÚDO ===== */
+    main { max-width: 1200px; margin: 0 auto; padding: 52px 24px 76px; }
+
+    section { margin-bottom: 58px; }
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateX(-14px);
+      transition: opacity .5s ease, transform .5s cubic-bezier(.2,.8,.2,1);
+    }
+    section.in-view .section-head { opacity: 1; transform: none; }
+
+    .section-icon {
+      width: 48px; height: 48px;
+      border-radius: var(--radius-sm);
+      display: grid;
+      place-items: center;
+      font-size: 23px;
+      color: #fff;
+      flex-shrink: 0;
+      box-shadow: 0 8px 22px rgba(0,0,0,.24);
+      animation: floaty 6s ease-in-out infinite;
+    }
+    .section-head h2 { font-family: 'Space Grotesk', 'Inter', sans-serif; font-size: 24px; font-weight: 700; letter-spacing: -.3px; }
+    .section-head .qtd {
+      background: color-mix(in srgb, var(--cat, var(--accent)) 18%, transparent);
+      color: var(--cat, var(--accent));
+      font-size: 13px;
+      font-weight: 800;
+      padding: 3px 11px;
+      border-radius: 999px;
+      margin-left: 4px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(252px, 1fr));
+      gap: 18px;
+    }
+
+    /* ===== CARDS (vidro + reveal) ===== */
+    .card {
+      position: relative;
+      background: var(--card);
+      backdrop-filter: blur(16px) saturate(130%);
+      -webkit-backdrop-filter: blur(16px) saturate(130%);
+      border: 1px solid var(--border);
+      border-top: 4px solid var(--cat, var(--accent));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .55s ease, transform .55s cubic-bezier(.2,.8,.2,1), box-shadow var(--transition), border-color var(--transition);
+      transition-delay: calc(min(var(--ci, 0), 8) * 55ms);
+    }
+    section.in-view .card { opacity: 1; transform: none; }
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: color-mix(in srgb, var(--cat, var(--accent)) 10%, transparent);
+      opacity: 0;
+      transition: opacity var(--transition);
+      pointer-events: none;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover), 0 0 0 1px var(--cat, var(--accent));
+      border-color: var(--cat, var(--accent));
+    }
+    .card:hover::after { opacity: 1; }
+
+    .card-top { display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
+    .card-icon {
+      width: 48px; height: 48px;
+      border-radius: var(--radius-sm);
+      display: grid;
+      place-items: center;
+      font-size: 23px;
+      background: color-mix(in srgb, var(--cat, var(--accent)) 18%, transparent);
+    }
+    .card-icon .emoji {
+      display: inline-block;
+      animation: floaty 6.5s ease-in-out infinite;
+      transition: transform var(--transition);
+    }
+    .card:hover .card-icon .emoji { animation-play-state: paused; transform: scale(1.22); }
+    .card .tipo {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+      color: var(--cat, var(--accent));
+      background: color-mix(in srgb, var(--cat, var(--accent)) 16%, transparent);
+      padding: 3px 9px;
+      border-radius: 999px;
+      position: relative;
+      z-index: 1;
+    }
+    .card h3 { font-size: 16px; font-weight: 700; position: relative; z-index: 1; }
+    .card p { font-size: 13.5px; color: var(--text-soft); flex: 1; position: relative; z-index: 1; }
+    .card mark {
+      background: color-mix(in srgb, var(--cat, var(--accent)) 32%, transparent);
+      color: var(--text);
+      border-radius: 5px;
+      padding: 0 3px;
+      font-weight: 700;
+    }
+    .card .go {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--cat, var(--accent));
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      position: relative;
+      z-index: 1;
+    }
+    .card .go::after { content: "→"; transition: transform .2s; }
+    .card:hover .go::after { transform: translateX(5px); }
+
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-5px); }
+    }
+
+    .no-results {
+      display: none;
+      text-align: center;
+      padding: 48px 20px;
+      color: var(--text-soft);
+      background: var(--card);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      font-size: 15px;
+    }
+    .no-results.visible { display: block; }
+
+    /* ===== RODAPÉ ===== */
+    footer {
+      background: var(--footer-bg);
+      color: #aab2c8;
+      text-align: center;
+      padding: 30px 16px;
+      font-size: 13.5px;
+      border-top: 1px solid rgba(255,255,255,.06);
+      transition: background var(--transition);
+    }
+    footer strong { color: #fff; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, .blob, .hero::after, .section-icon, .card-icon .emoji, .kw, .hero .badge, .hero p, .search-wrap, .chips, .card, .section-head {
+        animation: none !important;
+      }
+      .card, .section-head, .hero .badge, .hero p, .search-wrap, .chips, .kw {
+        opacity: 1 !important; transform: none !important;
+      }
+    }
+
+    /* ===== TABLET (481–900px) ===== */
+    @media (max-width: 900px) {
+      main { padding: 42px 20px 64px; }
+      .hero { padding: 50px 20px 58px; }
+      .grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+    }
+
+    /* ===== MOBILE (até 600px) ===== */
+    @media (max-width: 600px) {
+      main { padding: 32px 14px 54px; }
+      .hero { padding: 40px 16px 48px; }
+      .grid { grid-template-columns: 1fr; }
+      .section-head h2 { font-size: 21px; }
+      .hero h1 { font-size: clamp(26px, 7vw, 36px); }
+
+      /* topbar compacta */
+      .topbar { padding: 10px 14px; }
+      .logo { width: 170px; }
+      .theme-btn { width: 40px; height: 40px; font-size: 17px; }
+
+      /* chips rolam horizontalmente em vez de quebrar para várias linhas */
+      .chips {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        justify-content: flex-start;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 6px;
+        scrollbar-width: thin;
+      }
+      .chip { flex-shrink: 0; }
+    }
+
+    /* ===== TELA MUITO PEQUENA (até 360px) ===== */
+    @media (max-width: 360px) {
+      .logo { width: 150px; }
+      .hero h1 { font-size: clamp(23px, 6.5vw, 30px); }
+    }
+
+    /* ===== BOTÃO VOLTAR AO TOPO ===== */
+    .to-top {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 60;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 1px solid var(--border-strong);
+      background: color-mix(in srgb, var(--accent) 18%, transparent);
+      color: var(--text);
+      font-size: 20px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: opacity .25s, transform .25s, visibility .25s, background var(--transition);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .to-top:hover { background: color-mix(in srgb, var(--accent) 30%, transparent); }
+  </style>
+</head>
+<body>
+
+  <!-- fundo aurora -->
+  <div class="aurora" aria-hidden="true">
+    <span class="blob b1"></span>
+    <span class="blob b2"></span>
+    <span class="blob b3"></span>
+  </div>
+
+  <!-- ============ TOPBAR ============ -->
+  <header class="topbar">
+    <div class="brand">
+      <img class="logo" src="logo.png" alt="Logo — Diagnóstic Medical" onerror="this.onerror=null;this.src='logo.jpg'">
+    </div>
+    <button id="tema-toggle" class="theme-btn" type="button" aria-label="Alternar tema"></button>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="badge">✦ Central de Arquivos</div>
+    <h1>
+      <span class="kw" style="--d:0">Esquemas</span>
+      <span class="kw" style="--d:1">e</span>
+      <span class="kw" style="--d:2">Ligações</span>
+    </h1>
+    <p>Todos os esquemas, manuais e documentos de manutenção das nossas máquinas — em um só lugar.</p>
+
+    <div class="search-wrap">
+      <input type="text" id="busca" placeholder="Buscar por máquina, esquema, documento..." autocomplete="off">
+    </div>
+
+    <div class="chips" id="chips"></div>
+
+    <div class="total-info" id="total-info" aria-live="polite"></div>
+  </section>
+
+  <!-- ============ CONTEÚDO (gerado pelo JS) ============ -->
+  <main id="conteudo"></main>
+
+  <!-- ============ RODAPÉ ============ -->
+  <footer>
+    <strong>Central de Arquivos</strong> · Esquemas e Ligações · Manutenção · <span id="ano"></span>
+  </footer>
+
+  <!-- ============ VOLTAR AO TOPO ============ -->
+  <button class="to-top" id="to-top" type="button" aria-label="Voltar ao topo">⬆️</button>
+
+  <script>
+    /* ============================================================
+       👉 COMO ADICIONAR UM NOVO ARQUIVO
+       Copie uma linha do bloco ARQUIVOS abaixo e troque os campos:
+         cat   → categoria (manuais | esquemas | pedais | display | agua | versoes)
+         nome  → nome do arquivo
+         desc  → uma descrição curta
+         link  → o link de compartilhamento do arquivo no Drive
+         tipo  → pdf | png | docx (define o ícone e o selo)
+       ============================================================ */
+
+    const CATEGORIAS = [
+      { id: 'manuais',  nome: 'Manuais',              icon: '📘', cor: '#2563eb' },
+      { id: 'esquemas', nome: 'Esquemas e Circuitos', icon: '🧩', cor: '#7c3aed' },
+      { id: 'pedais',   nome: 'Pedais e Conectores',  icon: '🔌', cor: '#f97316' },
+      { id: 'display',  nome: 'Display e Configuração', icon: '🖥️', cor: '#14b8a6' },
+      { id: 'agua',     nome: 'Sistema de Água (Tripter)', icon: '💧', cor: '#06b6d4' },
+      { id: 'versoes',  nome: 'Versões e Downgrade',  icon: '🔄', cor: '#ec4899' },
+    ];
+
+    const ARQUIVOS = [
+      // ===== MANUAIS =====
+      { cat: 'manuais', nome: 'Manual Digiscope RX2', desc: 'Manual completo da Digiscope RX2.', link: 'https://drive.google.com/file/d/1rZBFJsh_Ua50ofGFVlVigLrxDlRSXJPH/view', tipo: 'pdf' },
+      { cat: 'manuais', nome: 'Manual Tripter Compact', desc: 'Manual do Tripter Compact.', link: 'https://drive.google.com/file/d/1-3ibEl0tVHLpJD_8Zuuv3pWfgYCABlYF/view', tipo: 'pdf' },
+      { cat: 'manuais', nome: 'Controle HIWIN', desc: 'Documento de controle do HIWIN (formato Word).', link: 'https://drive.google.com/file/d/1lYzaGv_U9YuzEeOq4EblEMLTCWuZF1Dt/view', tipo: 'docx' },
+      { cat: 'manuais', nome: 'Medições Tensão — Fonte Alta Tensão', desc: 'Procedimento de medição de tensão da fonte de alta tensão do intensificador.', link: 'https://drive.google.com/file/d/1XjkfpArIVbb-YwTVRVu184eulUxYSm4g/view', tipo: 'pdf' },
+
+      // ===== ESQUEMAS E CIRCUITOS =====
+      { cat: 'esquemas', nome: 'Circuito de Pulso', desc: 'Esquema do circuito de pulso.', link: 'https://drive.google.com/file/d/1xtTJ5Ozd1C-pEX2ENfdSIwq4tj65PklB/view', tipo: 'pdf' },
+      { cat: 'esquemas', nome: 'Circuito de Pulso (v2)', desc: 'Segunda versão do esquema do circuito de pulso.', link: 'https://drive.google.com/file/d/1sg2yFrgK29AYsHyN3Ni2NgcotIwIWZj/view', tipo: 'pdf' },
+      { cat: 'esquemas', nome: 'Circuito Mesa', desc: 'Esquema do circuito da mesa.', link: 'https://drive.google.com/file/d/138SKt4GpRiU_YnvRWGxt0bCQvD64Fqu8/view', tipo: 'pdf' },
+      { cat: 'esquemas', nome: 'Circuito Mesa (v2)', desc: 'Segunda versão do esquema do circuito da mesa.', link: 'https://drive.google.com/file/d/17kAMZ6h626Jsc79BNddotJ5eMEjwmiab/view', tipo: 'pdf' },
+      { cat: 'esquemas', nome: 'PCB 120 Mod', desc: 'Esquema da placa PCB 120 modificada.', link: 'https://drive.google.com/file/d/1LgRfBU3DifhDv-OqLkTg8e7kKYyu5B3S/view', tipo: 'pdf' },
+      { cat: 'esquemas', nome: 'Cabo do 08 para PCB 120', desc: 'Esquema do cabo do 08 para a PCB 120.', link: 'https://drive.google.com/file/d/17O2phnq7nP0S2UFIIKDRET4cBahdlPtV/view', tipo: 'pdf' },
+      { cat: 'esquemas', nome: 'Litho Barramento Principal', desc: 'Esquema do barramento principal da Litho.', link: 'https://drive.google.com/file/d/1yOCjy1BTgNpywIBDj3lC3v3SDPKVg5BW/view', tipo: 'pdf' },
+      { cat: 'esquemas', nome: 'Interlock Litho', desc: 'Esquema do interlock da Litho.', link: 'https://drive.google.com/file/d/1BXgK1NrOLcbF0FFXlSJyVZ7to-9EYcyw/view', tipo: 'pdf' },
+      { cat: 'esquemas', nome: 'Esquema Cabo ED1000', desc: 'Esquema do cabo ED1000.', link: 'https://drive.google.com/file/d/1WzOpqOtuSU3wsesrS1oEOlZkj_brK0GO/view', tipo: 'pdf' },
+      { cat: 'esquemas', nome: 'Esquema Conector do Blue', desc: 'Esquema do conector do Blue.', link: 'https://drive.google.com/file/d/1_USiJ2Kh4iJmFsswbQmmGOIL0tPc-lQt/view', tipo: 'pdf' },
+      { cat: 'esquemas', nome: 'Esquema Ligação Ampola RX', desc: 'Esquema de ligação da ampola RX.', link: 'https://drive.google.com/file/d/1aqUx3hdB7PNn070RuNl_b9anIMe3PUM2/view', tipo: 'pdf' },
+
+      // ===== PEDAIS E CONECTORES =====
+      { cat: 'pedais', nome: 'Conector Pedal Cyber Ho', desc: 'Ligação do conector do pedal Cyber Ho.', link: 'https://drive.google.com/file/d/1zX8tf7fg65Lg7wKpQsMDXVBYShSDA2eh/view', tipo: 'pdf' },
+      { cat: 'pedais', nome: 'Conector Pedal Litho', desc: 'Ligação do conector do pedal Litho.', link: 'https://drive.google.com/file/d/1T5WtOQhASTI7dUtK06LYXwgWdxER8_uQ/view', tipo: 'pdf' },
+      { cat: 'pedais', nome: 'Medidas Pedal EMS Laserclast 35', desc: 'Medidas do pedal da EMS Laserclast 35.', link: 'https://drive.google.com/file/d/1bCAViN3SI5_g1Q3yo_V4DEAd-ojZUzsd/view', tipo: 'pdf' },
+      { cat: 'pedais', nome: 'Fiação Controle Remoto LAP4 (HIWIN)', desc: 'Fiação do controle remoto LAP4 do HIWIN.', link: 'https://drive.google.com/file/d/1ViMJ6OTJ1ud5DAL9VkpiZlPbVpPYDDKB/view', tipo: 'pdf' },
+
+      // ===== DISPLAY E CONFIGURAÇÃO =====
+      { cat: 'display', nome: 'Configuração Display Nusp', desc: 'Guia de configuração do display Nusp.', link: 'https://drive.google.com/file/d/1FevQuZelPN82SxmhUO_IZnOF6QJ6QKdI/view', tipo: 'pdf' },
+      { cat: 'display', nome: 'Ligação Nusp com Display', desc: 'Esquema de ligação do Nusp com o display.', link: 'https://drive.google.com/file/d/17i18KJemuAF_g4hTwvdJ3ycSJ5vqC7C6/view', tipo: 'pdf' },
+
+      // ===== SISTEMA DE ÁGUA (TRIPTER) =====
+      { cat: 'agua', nome: 'Sistema de Água Tripter 0022', desc: 'Esquema do sistema de água do Tripter (0022).', link: 'https://drive.google.com/file/d/1hVa2vB004b_bY9-DqmZRfNxVKQYiTwhE/view', tipo: 'pdf' },
+      { cat: 'agua', nome: 'Sistema de Água Tripter 0023', desc: 'Esquema do sistema de água do Tripter (0023).', link: 'https://drive.google.com/file/d/1rUGZtIfkACDSL2WZ6DTZbo6MG-xAU4AG/view', tipo: 'pdf' },
+      { cat: 'agua', nome: 'Sistema de Água 0022 (imagem)', desc: 'Imagem do sistema de água (0022).', link: 'https://drive.google.com/file/d/1FMBTq225KTdKPazbRlAnZXCwUIeu9vNH/view', tipo: 'png' },
+      { cat: 'agua', nome: 'Sistema de Água 0023 (imagem)', desc: 'Imagem do sistema de água (0023).', link: 'https://drive.google.com/file/d/1Nels3jrds_ik228XxbRhGoEDqilhyb70/view', tipo: 'png' },
+
+      // ===== VERSÕES E DOWNGRADE =====
+      { cat: 'versoes', nome: 'Downgrade Tripter Compact', desc: 'Procedimento de downgrade do Tripter Compact.', link: 'https://drive.google.com/file/d/1iaPhY1ha6Bb8K1lvzmdLGlGXV37G9QAL/view', tipo: 'pdf' },
+      { cat: 'versoes', nome: 'Downgrade Tripter Compact (imagem)', desc: 'Imagem do procedimento de downgrade do Tripter Compact.', link: 'https://drive.google.com/file/d/1ZvEUFwlEVS-fGeOhOxtcJ5PfB3cGnk1Y/view', tipo: 'png' },
+    ];
+
+    /* ============ ÍCONES POR TIPO ============ */
+    const ICONES = { pdf: '📄', png: '🖼️', jpg: '🖼️', docx: '📝', doc: '📝', default: '📁' };
+
+    /* ============ RENDERIZAÇÃO ============ */
+    const conteudo = document.getElementById('conteudo');
+    const chipsEl = document.getElementById('chips');
+
+    // chips de categoria
+    const chipHtml = ['todos']
+      .concat(CATEGORIAS.map(c => c.id))
+      .map((id, i) => {
+        const nome = id === 'todos' ? 'Todos' : (CATEGORIAS.find(c => c.id === id) || {}).nome;
+        return `<button class="chip${i === 0 ? ' active' : ''}" data-filter="${id}">${id === 'todos' ? '🗂️ ' : ''}${nome}</button>`;
+      }).join('');
+    chipsEl.innerHTML = chipHtml;
+
+    // monta as seções
+    function renderSections() {
+      conteudo.innerHTML = CATEGORIAS.map(cat => {
+        const itens = ARQUIVOS.filter(a => a.cat === cat.id);
+        if (!itens.length) return '';
+        const cards = itens.map((a, i) => `
+          <a class="card" href="${a.link}" target="_blank" rel="noopener"
+             style="--cat:${cat.cor}; --ci:${i}"
+             data-search="${(a.nome + ' ' + a.desc + ' ' + cat.nome).toLowerCase()}">
+            <div class="card-top">
+              <div class="card-icon"><span class="emoji">${ICONES[a.tipo] || ICONES.default}</span></div>
+              <span class="tipo">${a.tipo}</span>
+            </div>
+            <h3>${a.nome}</h3>
+            <p>${a.desc}</p>
+            <span class="go">Abrir arquivo</span>
+          </a>`).join('');
+        return `
+          <section data-cat="${cat.id}" style="--cat:${cat.cor}">
+            <div class="section-head">
+              <div class="section-icon">${cat.icon}</div>
+              <div>
+                <h2>${cat.nome} <span class="qtd" data-count="${itens.length}">0</span></h2>
+              </div>
+            </div>
+            <div class="grid">${cards}</div>
+          </section>`;
+      }).join('');
+    }
+
+    renderSections();
+
+    /* ============ BUSCA + FILTRO ============ */
+    const busca = document.getElementById('busca');
+    const chips = document.querySelectorAll('.chip');
+    const noResults = document.createElement('div');
+    noResults.className = 'no-results';
+    noResults.innerHTML = 'Nenhum arquivo encontrado. 😕 Tente outro termo de busca.';
+    conteudo.appendChild(noResults);
+
+    /* escapa HTML e envolta o termo em <mark> (case-insensitive) */
+    function destacar(texto, termo) {
+      const esc = s => s.replace(/[&<>"']/g, c => ({'&':'&','<':'<','>':'>','"':'"',"'":'&#39;'}[c]));
+      const safe = esc(texto);
+      if (!termo) return safe;
+      const re = new RegExp(termo.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+      return safe.replace(re, m => `<mark>${m}</mark>`);
+    }
+
+    const totalInfoEl = document.getElementById('total-info');
+
+    function filtrar() {
+      const termo = busca.value.trim().toLowerCase();
+      const filtro = document.querySelector('.chip.active').dataset.filter;
+      const catNome = (CATEGORIAS.find(c => c.id === filtro) || {}).nome;
+      const temFiltro = filtro && filtro !== 'todos';
+      const temBusca = !!termo;
+
+      let totalVisiveis = 0;
+
+      document.querySelectorAll('section').forEach(sec => {
+        const catId = sec.dataset.cat;
+        if (!catId) return;
+        const passouCategoria = filtro === 'todos' || catId === filtro;
+        let visiveis = 0;
+
+        sec.querySelectorAll('.card').forEach(card => {
+          const texto = card.dataset.search;
+          const visivel = passouCategoria && (!temBusca || texto.includes(termo));
+          card.style.display = visivel ? '' : 'none';
+          if (visivel) visiveis++;
+        });
+
+        sec.style.display = (passouCategoria && visiveis > 0) ? '' : 'none';
+        totalVisiveis += visiveis;
+      });
+
+      // ---- destaque do termo nos cards visíveis ----
+      document.querySelectorAll('.card').forEach(card => {
+        const h3 = card.querySelector('h3');
+        const p = card.querySelector('p');
+        [h3, p].forEach(el => {
+          if (!el) return;
+          if (!el.dataset.orig) el.dataset.orig = el.textContent;
+          el.innerHTML = destacar(el.dataset.orig, (card.style.display !== 'none') ? temBusca ? termo : '' : '');
+        });
+      });
+
+      // ---- contador total-info ----
+      let msg;
+      const n = totalVisiveis;
+      if (n === 0) {
+        msg = 'Nenhum resultado encontrado 😕';
+      } else if (temFiltro && temBusca) {
+        msg = `📂 ${n} ${n === 1 ? 'resultado' : 'resultados'} em ${catNome}`;
+      } else if (temBusca) {
+        msg = `📂 ${n} ${n === 1 ? 'resultado' : 'resultados'}`;
+      } else if (temFiltro) {
+        msg = `📂 ${n} ${n === 1 ? 'arquivo' : 'arquivos'} em ${catNome}`;
+      } else {
+        msg = `📂 ${ARQUIVOS.length} arquivos disponíveis`;
+      }
+      totalInfoEl.textContent = msg;
+
+      // ---- título da aba ----
+      if (temBusca) document.title = `Busca: "${busca.value.trim()}" — Central de Arquivos`;
+      else if (temFiltro) document.title = `${catNome} — Central de Arquivos`;
+      else document.title = 'Central de Arquivos — Esquemas e Ligações';
+
+      noResults.classList.toggle('visible', totalVisiveis === 0);
+    }
+
+    busca.addEventListener('input', filtrar);
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        chips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        filtrar();
+      });
+    });
+
+    /* ============ REVELA NO SCROLL + CONTADORES ============ */
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in-view');
+          e.target.querySelectorAll('.qtd[data-count]').forEach(q => {
+            if (q.dataset.done) return;
+            q.dataset.done = '1';
+            const target = parseInt(q.dataset.count, 10) || 0;
+            const dur = 850;
+            const t0 = performance.now();
+            function tick(now) {
+              const p = Math.min(1, (now - t0) / dur);
+              const eased = 1 - Math.pow(1 - p, 3);
+              q.textContent = Math.round(target * eased);
+              if (p < 1) requestAnimationFrame(tick); else q.textContent = target;
+            }
+            requestAnimationFrame(tick);
+          });
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('section[data-cat]').forEach(s => io.observe(s));
+
+    /* ============ TEMA (claro / escuro) ============ */
+    const temaBtn = document.getElementById('tema-toggle');
+    function atualizarIconeTema() {
+      const t = document.documentElement.getAttribute('data-theme');
+      temaBtn.textContent = t === 'escuro' ? '☀️' : '🌙';
+      temaBtn.setAttribute('aria-label', t === 'escuro' ? 'Ativar modo claro' : 'Ativar modo escuro');
+      temaBtn.title = t === 'escuro' ? 'Mudar para modo claro' : 'Mudar para modo escuro';
+    }
+    temaBtn.addEventListener('click', () => {
+      const atual = document.documentElement.getAttribute('data-theme');
+      const novo = atual === 'escuro' ? 'claro' : 'escuro';
+      document.documentElement.setAttribute('data-theme', novo);
+      try { localStorage.setItem('tema', novo); } catch (e) {}
+      atualizarIconeTema();
+    });
+    atualizarIconeTema();
+
+    /* barra do navegador acompanha o tema (Android) */
+    function atualizarThemeColor() {
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (!meta) return;
+      meta.content = document.documentElement.getAttribute('data-theme') === 'escuro' ? '#07060f' : '#4f46e5';
+    }
+    atualizarThemeColor();
+    const obsTema = new MutationObserver(atualizarThemeColor);
+    obsTema.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    /* ============ VOLTAR AO TOPO ============ */
+    const toTop = document.getElementById('to-top');
+    function toggleToTop() {
+      toTop.classList.toggle('show', (window.scrollY || document.documentElement.scrollTop) > 500);
+    }
+    window.addEventListener('scroll', toggleToTop, { passive: true });
+    toggleToTop();
+    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    /* ============ ANO NO RODAPÉ ============ */
+    document.getElementById('ano').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>

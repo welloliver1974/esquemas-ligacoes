@@ -1,0 +1,5 @@
+﻿node_modules/
+.claude/
+*.png.bak
+*.ps1.bak
+*.log
