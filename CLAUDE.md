@@ -16,18 +16,19 @@ Sem build, sem framework, sem dependências. É HTML + CSS + JS puros num único
 Todo o app mora em `index.html` (~924 linhas). Dentro do `<script>` a lógica é 100%
 data-driven:
 
-- `CATEGORIAS` — array com `id`, `nome`, `icon` (emoji) e `cor` (hex) de cada categoria.
-  ids: `manuais`, `esquemas`, `pedais`, `display`, `agua`, `versoes`.
+- `CATEGORIAS` — array com `id`, `nome`, `icon` e `cor` (hex) de cada categoria.
+  ids: `manuais`, `esquemas`, `pedais`, `display`, `agua`, `versoes`. (`icon` está em
+  desuso no UI atual — a cor vira o filete lateral da seção/linhas.)
 - `ARQUIVOS` — array dos itens. Cada item: `{ cat, nome, desc, link, tipo }`.
-  `tipo` ∈ `pdf | png | jpg | docx | doc` → define o ícone/selo do card (mapa em `ICONES`).
-- `renderSections()` — gera as seções e cards via template strings a partir de `CATEGORIAS`
-  + `ARQUIVOS`. Cada card expõe `data-search` (nome+desc+categoria, lowercase) para a busca.
+  `tipo` ∈ `pdf | png | jpg | docx | doc` → define o ícone SVG e a tag mono (mapa em `ICONES`).
+- `renderSections()` — gera as seções e linhas de índice via template strings a partir de
+  `CATEGORIAS` + `ARQUIVOS`. Cada linha expõe `data-search` (nome+desc+categoria, lowercase)
+  para a busca.
 - `filtrar()` — busca por texto + filtro por chip de categoria. Destaca o termo com `<mark>`
   em `h3`/`p`, atualiza o contador `#total-info`, a mensagem de "sem resultados" e o
   `document.title`. O nome original de cada elemento é guardado em `dataset.orig` para
-  poder re-highlightar sem duplicar `<mark>`.
-- `IntersectionObserver` — controla o reveal no scroll (`section.in-view`) e dispara a
-  animação dos contadores de quantidade por categoria (`.qtd[data-count]`).
+  poder re-highlightar sem duplicar `<mark>`. É chamado uma vez no load pra mostrar o total.
+- `IntersectionObserver` — aplica `section.in-view` para o fade de entrada discreto (150ms).
 
 ## Adicionar / editar arquivos
 
@@ -78,4 +79,6 @@ AppDiagDrive/
 
 - Tudo em português (pt-BR): textos, labels, comentários.
 - Sem dependências externas além das fontes Google (Inter / Space Grotesk) carregadas via CDN.
-- Estilo: tema "Aurora Glass" (glassmorphism + fundo aurora animado com blobs).
+- Estilo: visual de manual técnico — superfícies sólidas (sem glassmorphism), sem
+  animações infinitas, ícones SVG inline (sem emoji na UI), tags/filetes em
+  IBM Plex Mono, texto em IBM Plex Sans. Paleta cinza-chumbo + azul de destaque.

@@ -10,9 +10,9 @@ Cada arquivo abre direto do Google Drive.
 
 - 📂 **27 arquivos** organizados em **6 categorias** (manuais, esquemas, pedais, display,
   sistema de água, versões/downgrade)
-- 🎨 Tema **Aurora Glass** com **modo claro/escuro** (persistente via `localStorage`)
+- 🎨 Visual de manual técnico com **modo claro/escuro** (persistente via `localStorage`)
 - 🔍 **Busca** por texto com destaque do termo + **filtros por categoria** (chips)
-- 📜 **Reveal on scroll** e **contadores animados** por categoria
+- 🧾 **Índice por categoria** — filete de cor por seção e tags mono de tipo do arquivo
 - 📱 **Responsivo** (mobile, tablet e desktop)
 - ♿ Respeita `prefers-reduced-motion` e usa `aria-live` nos resultados
 - ⚡ Zero build, zero dependências externas além das fontes do Google
