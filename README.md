@@ -8,8 +8,8 @@ Cada arquivo abre direto do Google Drive.
 
 ## ✨ Recursos
 
-- 📂 **27 arquivos** organizados em **6 categorias** (manuais, esquemas, pedais, display,
-  sistema de água, versões/downgrade)
+- 📂 **28 arquivos** organizados em **7 categorias** (manuais, esquemas, pedais, display,
+  sistema de água, versões/downgrade, softwares)
 - 🎨 Visual de manual técnico com **modo claro/escuro** (persistente via `localStorage`)
 - 🔍 **Busca** por texto com destaque do termo + **filtros por categoria** (chips)
 - 🧾 **Índice por categoria** — filete de cor por seção e tags mono de tipo do arquivo
@@ -27,6 +27,9 @@ Cada arquivo abre direto do Google Drive.
 | Display e Configuração | 🖥️ | Display Nusp e ligações |
 | Sistema de Água (Tripter) | 💧 | Esquemas do sistema de água |
 | Versões e Downgrade | 🔄 | Procedimentos de downgrade |
+| Softwares | 💾 | Pasta de softwares no Drive |
+
+> Itens do tipo `pasta` abrem uma pasta do Google Drive em vez de um arquivo.
 
 ## 🚀 Como ver / rodar localmente
 
@@ -50,11 +53,11 @@ O conteúdo é **data-driven**. Edite o array `ARQUIVOS` no `index.html`:
 
 Campos:
 
-- `cat` — categoria: `manuais | esquemas | pedais | display | agua | versoes`
+- `cat` — categoria: `manuais | esquemas | pedais | display | agua | versoes | softwares`
 - `nome` — nome do arquivo
 - `desc` — descrição curta (aparece no card)
-- `link` — link de compartilhamento do arquivo no Google Drive
-- `tipo` — `pdf | png | jpg | docx | doc` (define o ícone e o selo do card)
+- `link` — link de compartilhamento do arquivo no Drive (arquivo: `.../file/d/<ID>/view` ou pasta: `.../drive/folders/<ID>`)
+- `tipo` — `pdf | png | jpg | docx | doc | pasta` (define o ícone e o selo do card)
 
 A renderização, a contagem, a busca e os filtros são automáticos. Há um comentário-guia
 no topo do `<script>` do `index.html` com essas mesmas instruções.

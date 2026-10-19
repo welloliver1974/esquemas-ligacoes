@@ -452,6 +452,7 @@
       { id: 'display',  nome: 'Display e Configuração', icon: '🖥️', cor: '#14b8a6' },
       { id: 'agua',     nome: 'Sistema de Água (Tripter)', icon: '💧', cor: '#06b6d4' },
       { id: 'versoes',  nome: 'Versões e Downgrade',  icon: '🔄', cor: '#ec4899' },
+      { id: 'softwares', nome: 'Softwares',           icon: '💾', cor: '#16a34a' },
     ];
 
     const ARQUIVOS = [
@@ -493,6 +494,9 @@
       // ===== VERSÕES E DOWNGRADE =====
       { cat: 'versoes', nome: 'Downgrade Tripter Compact', desc: 'Procedimento de downgrade do Tripter Compact.', link: 'https://drive.google.com/file/d/1iaPhY1ha6Bb8K1lvzmdLGlGXV37G9QAL/view', tipo: 'pdf' },
       { cat: 'versoes', nome: 'Downgrade Tripter Compact (imagem)', desc: 'Imagem do procedimento de downgrade do Tripter Compact.', link: 'https://drive.google.com/file/d/1ZvEUFwlEVS-fGeOhOxtcJ5PfB3cGnk1Y/view', tipo: 'png' },
+
+      // ===== SOFTWARES =====
+      { cat: 'softwares', nome: 'Softwares Medispec', desc: 'Pasta com os softwares Medispec.', link: 'https://drive.google.com/drive/folders/16Gu4EuyHcTp9sK8_knGbaAPAxi8znJ1', tipo: 'pasta' },
     ];
 
     /* ============ ÍCONES SVG POR TIPO ============ */
@@ -502,13 +506,15 @@
         + '<path d="M14 3v5h5"/>' + inner + '</svg>';
     }
     const IMG_INNER = '<circle cx="10" cy="12" r="1"/><path d="M8 18l2.5-3 1.5 1.5 2-2.5 2 4z"/>';
+    const FOLDER_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>';
     const ICONES = {
       pdf: fileIcon('<path d="M9 13h6M9 16h4"/>'),
       png: fileIcon(IMG_INNER),
       jpg: fileIcon(IMG_INNER),
       docx: fileIcon('<path d="M9 12h6M9 15h6M9 18h3"/>'),
       doc: fileIcon('<path d="M9 12h6M9 15h6M9 18h3"/>'),
-      default: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>',
+      pasta: FOLDER_SVG,
+      default: FOLDER_SVG,
     };
 
     /* ============ RENDERIZAÇÃO ============ */

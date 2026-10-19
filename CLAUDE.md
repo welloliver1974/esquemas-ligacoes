@@ -5,9 +5,10 @@ Contexto para o Claude Code em sessões futuras neste repositório.
 ## Visão geral
 
 Landing page **estática, single-file** que funciona como uma central de arquivos de
-manutenção: organiza 27 documentos técnicos (esquemas, manuais, circuitos, procedimentos)
-de equipamentos médicos de radiologia/imagem (Digiscope, Tripter, HIWIN, LAP4, etc.) em
-6 categorias, cada item com link direto para um arquivo no Google Drive.
+manutenção: organiza 28 documentos técnicos (esquemas, manuais, circuitos, procedimentos,
+pastas de software) de equipamentos médicos de radiologia/imagem (Digiscope, Tripter,
+HIWIN, LAP4, etc.) em 7 categorias, cada item com link direto para um arquivo ou pasta
+no Google Drive.
 
 Sem build, sem framework, sem dependências. É HTML + CSS + JS puros num único `index.html`.
 
@@ -17,10 +18,11 @@ Todo o app mora em `index.html` (~924 linhas). Dentro do `<script>` a lógica é
 data-driven:
 
 - `CATEGORIAS` — array com `id`, `nome`, `icon` e `cor` (hex) de cada categoria.
-  ids: `manuais`, `esquemas`, `pedais`, `display`, `agua`, `versoes`. (`icon` está em
-  desuso no UI atual — a cor vira o filete lateral da seção/linhas.)
+  ids: `manuais`, `esquemas`, `pedais`, `display`, `agua`, `versoes`, `softwares`.
+  (`icon` está em desuso no UI atual — a cor vira o filete lateral da seção/linhas.)
 - `ARQUIVOS` — array dos itens. Cada item: `{ cat, nome, desc, link, tipo }`.
-  `tipo` ∈ `pdf | png | jpg | docx | doc` → define o ícone SVG e a tag mono (mapa em `ICONES`).
+  `tipo` ∈ `pdf | png | jpg | docx | doc | pasta` → define o ícone SVG e a tag mono
+  (mapa em `ICONES`; `pasta` usa link `.../drive/folders/<ID>` em vez de `.../file/d/<ID>/view`).
 - `renderSections()` — gera as seções e linhas de índice via template strings a partir de
   `CATEGORIAS` + `ARQUIVOS`. Cada linha expõe `data-search` (nome+desc+categoria, lowercase)
   para a busca.
